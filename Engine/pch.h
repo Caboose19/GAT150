@@ -10,4 +10,14 @@
 // add headers that you want to pre-compile here
 #include "framework.h"
 
+
+#include "SDL.h"
+#include "SDL_image.h"
+
+#include <iostream>
+#include <string>
+#include <list>
+#include <fstream>
+#include <vector>
+#include <map>
 #endif //PCH_H

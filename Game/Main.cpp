@@ -1,13 +1,16 @@
-	#include <iostream>
-	#include <SDL.h>
+	#include "Graphics/Texture.h"
+	#include "pch.h"
 
-	int main(int, char**)
+int main(int, char**)
 	{
 		if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		{
+		
 			std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
 			return 1;
 		}
+		IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
+
 
 		SDL_Window* window = SDL_CreateWindow("GAT150", 100, 100, 800, 600, SDL_WINDOW_SHOWN);
 
@@ -37,14 +40,10 @@
 		memset(pixels, 255, width * height*sizeof(Uint32));
 		SDL_UpdateTexture(texture1, NULL, pixels, width  * sizeof(Uint32));
 
-		SDL_Surface* surface = SDL_LoadBMP("sf2.bmp");
-		if(surface == nullptr)
-		{
-			std::cout << "Error:" << SDL_GetError() << std::endl;
-			SDL_Quit();
-			return 1;
-		}
-		SDL_Texture* texture2 = SDL_CreateTextureFromSurface(renderer, surface);
+		nc::Texutre texture;
+		texture.Create("sf2.png", renderer);
+		
+
 		SDL_Event event;
 		bool quit = false;
 		while (!quit)
@@ -78,22 +77,15 @@
 
 			SDL_RenderCopy(renderer,texture1,NULL,&rect);
 
-			int w, h;
-			SDL_QueryTexture(texture2, NULL, NULL, &w, &h);
-			SDL_Rect rect2;
-			rect2.x = 20;
-			rect2.y = 20;
-			rect2.w = w;
-			rect2.h = h;
+			
 
-			SDL_QueryTexture(texture2, NULL, NULL,&rect2.w,&rect2.h);
+			texture.Draw({ 500,100 }, { 1,1 },45.0f);
 
-			SDL_RenderCopy(renderer, texture2, NULL, &rect2);
 			SDL_RenderPresent(renderer);
 		}
 
 		return 0;
 
 		SDL_Quit();
-
+		IMG_Quit();
 	}
