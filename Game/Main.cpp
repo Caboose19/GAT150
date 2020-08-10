@@ -6,9 +6,9 @@
 	#include "pch.h"
 
 nc::ResourceManager resourcemanager;
-nc::Renderer renderer;
 nc::FrameTimer ftimer;
 nc::InputSystems inputSystems;
+nc::Renderer renderer;
 
 int main(int, char**)
 	{
@@ -29,7 +29,7 @@ int main(int, char**)
 		nc::Texture* background = resourcemanager.Get<nc::Texture>("background.png",&renderer);
 		
 		float angle{ 0 };
-		nc::Vector2 position{ 400,300 };
+		nc::Vector2 position{ 500,200 };
 
 		SDL_Event event;
 		bool quit = false;
@@ -48,11 +48,11 @@ int main(int, char**)
 
 			if (inputSystems.GetButtonState(SDL_SCANCODE_LEFT) == nc::InputSystems::eButtonSate::HELD)
 			{
-				position.x = position.x - 1.0f;
+				position.x = position.x - 10.0f;
 			}
 			if (inputSystems.GetButtonState(SDL_SCANCODE_RIGHT) == nc::InputSystems::eButtonSate::HELD)
 			{
-				position.x = position.x + 1.0f;
+				position.x = position.x + 10.0f;
 			}
 
 

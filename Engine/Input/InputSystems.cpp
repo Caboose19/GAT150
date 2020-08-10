@@ -5,7 +5,7 @@ namespace nc
 	bool InputSystems::StartUp()
 	{
 		//get current keystate and retrieve num keys
-		const Uint8* keystate = SDL_GetKeyboardSate(&m_numKeys);
+		const Uint8* keystate = SDL_GetKeyboardState(&m_numKeys);
 
 		//allocate memoryfor current and previous keystate
 		m_keystate = new Uint8[m_numKeys];
@@ -25,9 +25,19 @@ namespace nc
 	{
 		memcpy(m_prevKeystate, m_keystate, m_numKeys);
 
-		const Uint8* keystate = SDL_GetKeyboardSate(nullptr);
+		const Uint8* keystate = SDL_GetKeyboardState(nullptr);
 
 		memcpy(m_keystate, keystate, m_numKeys);
+	}
+
+	bool InputSystems::GetButtonDown(int id)
+	{
+		return m_keystate[id];
+	}
+
+	bool InputSystems::GetPreviousButtonDown(int id)
+	{
+		return m_prevKeystate[id];
 	}
 
 	InputSystems::eButtonSate InputSystems::GetButtonState(int id)
@@ -40,24 +50,16 @@ namespace nc
 
 		if (buttonDown)
 		{
-			state = (prevButtonDown) ?	eButtonSate::PRESSED: eButtonSate::IDLE;
+			state = (prevButtonDown) ?	eButtonSate::HELD: eButtonSate::PRESSED;
 		}
 		else
 		{
-			state = (prevButtonDown) ? eButtonSate::HELD : eButtonSate::REALEASED;
+			state = (prevButtonDown) ? eButtonSate::REALEASED : eButtonSate::IDLE;
 		}
 
 		return state;
 
 	}
 
-	bool InputSystems::GetButtonDown(int id)
-	{
-		return m_keystate[m_numKeys];
-	}
-
-	bool InputSystems::GetPreviousButtonDown(int id)
-	{
-		return m_prevKeystate[m_numKeys];
-	}
+	
  }

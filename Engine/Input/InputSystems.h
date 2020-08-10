@@ -25,8 +25,8 @@ namespace nc
 		bool GetPreviousButtonDown(int id);
 
 
+	
 
-		const Uint8* SDL_GetKeyboardSate(int* numkeys);
 		
 	protected:
 		Uint8* m_keystate;
