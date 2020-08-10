@@ -2,17 +2,18 @@
 #include <SDL.h>
 #include <string>
 #include <Math\Vector2.h>
-
+#include "Resources/Resource.h"
 namespace nc
 {
-	class Texutre
+	class Texture : public Resource
 	{
 	public:
 		
-		bool Create(const std::string& name, SDL_Renderer* renderer);
-		void Destory();
+		bool Create(const std::string& name, void* renderer)override;
+		void Destory() override;
 
 		void Draw(const Vector2& position, const Vector2& scale, float angle);
+		void Draw(const SDL_Rect& source,const Vector2& position, const Vector2& scale, float angle);
 
 		Vector2 GetSize();
 	protected:

@@ -1,48 +1,35 @@
+	#include "Resources/ResourceManager.h"
+	#include "Input/InputSystems.h"
+	#include "Graphics/Renderer.h"
 	#include "Graphics/Texture.h"
+	#include "Core/Timer.h"
 	#include "pch.h"
+
+nc::ResourceManager resourcemanager;
+nc::Renderer renderer;
+nc::FrameTimer ftimer;
+nc::InputSystems inputSystems;
 
 int main(int, char**)
 	{
-		if (SDL_Init(SDL_INIT_VIDEO) != 0)
-		{
+	
+
+		//profile
+	//	for (size_t i = 0; i < 100000; i++)
+	//	{
+	//		std::sqrt(rand() % 100);
+	//	}
+	//	std::cout << timer.ElapsedSeconds() << std::endl;
+
+		inputSystems.StartUp();
+		renderer.StartUp();
+		renderer.Create("GAT150", 800, 600);
+		//texture
+		nc::Texture* car = resourcemanager.Get<nc::Texture>("cars.png",&renderer);
+		nc::Texture* background = resourcemanager.Get<nc::Texture>("background.png",&renderer);
 		
-			std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
-			return 1;
-		}
-		IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
-
-
-		SDL_Window* window = SDL_CreateWindow("GAT150", 100, 100, 800, 600, SDL_WINDOW_SHOWN);
-
-		if (window == nullptr) {
-			std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
-			SDL_Quit();
-			return 1;
-		}
-
-		SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-
-		if (renderer == nullptr)
-		{
-			std::cout << "Error:" << SDL_GetError() << std::endl;
-			SDL_Quit();
-			return 1;
-		}
-
-
-		//create texture
-		int width = 128;
-		int height = 128;
-
-		SDL_Texture* texture1 = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STATIC, width, height);
-
-		Uint32* pixels = new Uint32[width * height];
-		memset(pixels, 255, width * height*sizeof(Uint32));
-		SDL_UpdateTexture(texture1, NULL, pixels, width  * sizeof(Uint32));
-
-		nc::Texutre texture;
-		texture.Create("sf2.png", renderer);
-		
+		float angle{ 0 };
+		nc::Vector2 position{ 400,300 };
 
 		SDL_Event event;
 		bool quit = false;
@@ -55,37 +42,33 @@ int main(int, char**)
 				quit = true;
 				break;
 			}
+			//update
+			inputSystems.Update();
+			ftimer.Tick();
 
-			SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-			SDL_RenderClear(renderer);
-
-
-			//draw
-		
-			for (size_t i = 0; i < width * height; i++)
+			if (inputSystems.GetButtonState(SDL_SCANCODE_LEFT) == nc::InputSystems::eButtonSate::HELD)
 			{
-				Uint8 c = rand() % 256;
-				pixels[i] = (c << 24 | c << 16 | c << 8);
+				position.x = position.x - 1.0f;
 			}
-			SDL_UpdateTexture(texture1, NULL, pixels, width * sizeof(Uint32));
+			if (inputSystems.GetButtonState(SDL_SCANCODE_RIGHT) == nc::InputSystems::eButtonSate::HELD)
+			{
+				position.x = position.x + 1.0f;
+			}
 
-			SDL_Rect rect;
-			rect.x = 200;
-			rect.y = 200;
-			rect.w = width;
-			rect.h = height;
 
-			SDL_RenderCopy(renderer,texture1,NULL,&rect);
+			renderer.BeginFrame();
+			
+			angle = angle + 180 * ftimer.DeltaTime();
+			background->Draw({ 0,0 }, { 1.0f,1.0f },0);
+			car->Draw({0,16,64,144}, {position}, { 1.0f,1.0f }, 0);
+
+			renderer.EndFrame();
 
 			
-
-			texture.Draw({ 500,100 }, { 1,1 },45.0f);
-
-			SDL_RenderPresent(renderer);
 		}
-
-		return 0;
-
+		
+		inputSystems.ShutDown();
+		renderer.ShutDown();
 		SDL_Quit();
-		IMG_Quit();
+		return 0;
 	}
