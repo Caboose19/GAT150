@@ -65,7 +65,7 @@ namespace nc
 			BYTE _a = static_cast<BYTE>(b * 255.0f);
 
 			return color;
-		}
+	}
 
 
 }
