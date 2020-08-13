@@ -38,6 +38,10 @@ namespace nc
 		Vector2& operator *= (float s) { x *= s; y *= s; return *this; }
 		Vector2& operator /= (float s) { x /= s; y /= s; return *this; }
 
+
+		
+
+
 		Vector2 operator - () { return Vector2{ -x, -y }; }
 		
 		friend std::istream& operator >> (std::istream& stream, Vector2& v); // stream >> v
@@ -109,4 +113,10 @@ namespace nc
 		return{ x,y };
 	}
 
+	inline std::ostream& operator<<(std::ostream& stream, Vector2& v)
+	{
+		stream << v.x << " " << v.y;
+
+		return stream;
+	}
 }

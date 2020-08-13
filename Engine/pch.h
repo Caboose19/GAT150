@@ -13,6 +13,7 @@
 
 #include "SDL.h"
 #include "SDL_image.h"
+#include <Math\Math.h>
 
 #include <iostream>
 #include <string>

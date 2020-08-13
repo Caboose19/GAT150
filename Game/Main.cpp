@@ -1,37 +1,77 @@
-	#include "Resources/ResourceManager.h"
-	#include "Input/InputSystems.h"
-	#include "Graphics/Renderer.h"
 	#include "Graphics/Texture.h"
-	#include "Core/Timer.h"
+	#include "Object/GameObject.h"
 	#include "Math/Math.h"
+	#include "Engine.h"
 	#include "pch.h"
+	#include "Components/PhysicsComponent.h"
+	#include "Components/SpriteComponent.h"
+	#include "Components/PlayerComponent.h"
+	#include "Core/Json.h"
 
-nc::ResourceManager resourcemanager;
-nc::FrameTimer timer;
-nc::InputSystems inputSystems;
-nc::Renderer renderer;
+nc::Engine engine;
+nc::GameObject player;
 
 int main(int, char**)
 	{
 	
+	rapidjson::Document document;
+	nc::json::Load("json.txt", document);
 
-		//profile
-	//	for (size_t i = 0; i < 100000; i++)
-	//	{
-	//		std::sqrt(rand() % 100);
-	//	}
-	//	std::cout << timer.ElapsedSeconds() << std::endl;
+	
+		std::string str;
+		nc::json::Get(document, "string", str);
+		std::cout << str << std::endl;
 
-		inputSystems.StartUp();
-		renderer.StartUp();
-		renderer.Create("GAT150", 800, 600);
-		//texture
-		nc::Texture* car = resourcemanager.Get<nc::Texture>("cars.png",&renderer);
-		nc::Texture* background = resourcemanager.Get<nc::Texture>("background.png",&renderer);
+		bool b;
+		nc::json::Get(document, "bool", b);
+		std::cout << b << std::endl;
+
+		int i1;
+		nc::json::Get(document, "integer1", i1);
+		std::cout << i1 << std::endl;
+
+		int i2;
+		nc::json::Get(document, "integer2", i2);
+		std::cout << i2 << std::endl;
+
+		float f;
+		nc::json::Get(document, "float", f);
+		std::cout << f << std::endl;
+
+		nc::Vector2 v2;
+		nc::json::Get(document, "vector2", v2);
+		std::cout << v2 << std::endl;
+
+		nc::Color color;
+		nc::json::Get(document, "color", color);
+		std::cout << color << std::endl;
+
+
+
+		engine.Startup();
 		
-		nc::Vector2 position{ 500,200 };
-		nc::Vector2 velocity;
-		float angle{ 0 };
+		player.Create(&engine);
+		player.m_transform.position = { 400,300 };
+		player.m_transform.angle = { 45 };
+
+		nc::Component* component = new nc::PhysicsComponent;
+		player.AddCompoent(component);
+		component->Create();
+		
+		component = new nc::SpriteComponent;
+		player.AddCompoent(component);
+		component->Create();
+
+		component = new nc::PlayerComponent;
+		player.AddCompoent(component);
+		component->Create();
+
+
+		//texture
+		nc::Texture* background = engine.GetSystem<nc::ResourceManager>()->Get<nc::Texture>("background.png",engine.GetSystem<nc::Renderer>());
+		
+		
+		
 
 		SDL_Event event;
 		bool quit = false;
@@ -45,50 +85,34 @@ int main(int, char**)
 				break;
 			}
 			//update
-			inputSystems.Update();
-			timer.Tick();
+			
+			engine.Update();
+			player.Update();
 
 
-			if (inputSystems.GetButtonState(SDL_SCANCODE_ESCAPE) == nc::InputSystems::eButtonSate::HELD)
+			if (engine.GetSystem<nc::InputSystems>()->GetButtonState(SDL_SCANCODE_ESCAPE) == nc::InputSystems::eButtonSate::HELD)
 			{
 				return  quit;
 			}
 
-			if (inputSystems.GetButtonState(SDL_SCANCODE_LEFT) == nc::InputSystems::eButtonSate::HELD)
-			{
-				angle = angle - 90.0f * timer.DeltaTime();
-			}
-			if (inputSystems.GetButtonState(SDL_SCANCODE_RIGHT) == nc::InputSystems::eButtonSate::HELD)
-			{
-				angle = angle + 90.0f * timer.DeltaTime();
-			}
-			nc::Vector2 force{ 0,0 };
-			if (inputSystems.GetButtonState(SDL_SCANCODE_W) == nc::InputSystems::eButtonSate::HELD)
-			{
-				force = nc::Vector2::Forward * 1000.0f;
-			}
-			force = nc::Vector2::Rotate(force, nc::DegreesToRadians(angle));
 			//physics
 
-			velocity = velocity + force * timer.DeltaTime();
-			velocity = velocity * 0.98f;
-			position = position + velocity * timer.DeltaTime();
+			
 
 			//draw
-			renderer.BeginFrame();
+			engine.GetSystem<nc::Renderer>()->BeginFrame();
 			
 		
 			background->Draw({ 0,0 }, { 1.0f,1.0f },0);
 			//render sprite
-			car->Draw({120,30,70,90}, {position}, { 1.0f,1.0f }, angle);
+			
+			player.Draw();
 
-			renderer.EndFrame();
+			engine.GetSystem<nc::Renderer>()->EndFrame();
 
 			
 		}
 		
-		inputSystems.ShutDown();
-		renderer.ShutDown();
-		SDL_Quit();
+		engine.Shutdown();
 		return 0;
 	}

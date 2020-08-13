@@ -1,4 +1,5 @@
 #pragma once
+#include "SDL.h"
 #include <windows.h>
 #include <iostream>
 
@@ -66,6 +67,12 @@ namespace nc
 
 			return color;
 	}
+	
+	inline std::ostream& operator<<(std::ostream& stream, Color& c)
+	{
+		stream << c.r << " " << c.g << c.b << c.a;
 
+		return stream;
+	}
 
 }

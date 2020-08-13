@@ -1,5 +1,6 @@
 #pragma once
 #include "Math/transform.h"
+#include "Engine.h"
 #include "Object.h"
 #include <vector>
 namespace nc
@@ -7,6 +8,7 @@ namespace nc
 	class Component;
 	class GameObject : public Object
 	{
+	public:
 		// Inherited via Object
 		virtual bool Create(void* data = nullptr) override;
 
@@ -33,8 +35,10 @@ namespace nc
 
 		friend class PhysicsComponent;
 		friend class Component;
-	protected:
+	public:
 		Transform m_transform;
+		Engine* m_engine;
+	protected:
 		std::vector<Component*> m_components;
 	};
 }

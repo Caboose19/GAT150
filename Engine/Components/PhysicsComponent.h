@@ -12,11 +12,11 @@ namespace nc
 
 		virtual void Update() override;
 
+		void ApplyForce(const Vector2& force) { m_force = force; }
+
 	protected:
 		Vector2 m_velocity;
 		Vector2 m_force;
 		float m_drag{ 1 };
-
-		// Inherited via Component
 	};
 }

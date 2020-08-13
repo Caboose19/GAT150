@@ -7,10 +7,12 @@ namespace nc
 {
 	bool GameObject::Create(void* data)
 	{
-		return false;
+		m_engine = static_cast<Engine*>(data);
+		return true;
 	}
 	void GameObject::Destory()
 	{
+		RemoveAllCompoents();
 	}
 
 
