@@ -1,5 +1,5 @@
 #pragma once
-#include "Object/GameObject.h"
+#include "Objects/GameObject.h"
 namespace nc
 {
 	class GameObject;

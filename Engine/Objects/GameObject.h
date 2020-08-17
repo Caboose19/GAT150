@@ -9,10 +9,10 @@ namespace nc
 	class GameObject : public Object
 	{
 	public:
-		// Inherited via Object
 		virtual bool Create(void* data = nullptr) override;
-
 		virtual void Destory() override;	
+
+		void Read(const rapidjson::Value& value) override;
 
 		void AddCompoent(Component* component);
 		void RemoveCompoent(Component* component);
@@ -35,9 +35,11 @@ namespace nc
 
 		friend class PhysicsComponent;
 		friend class Component;
+
 	public:
 		Transform m_transform;
 		Engine* m_engine;
+
 	protected:
 		std::vector<Component*> m_components;
 	};

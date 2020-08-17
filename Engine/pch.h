@@ -14,7 +14,7 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include <Math\Math.h>
-
+#include"Core/Assert.h"
 #include <iostream>
 #include <string>
 #include <list>
@@ -22,4 +22,5 @@
 #include <vector>
 #include <map>
 #include <chrono>
+#include <functional>
 #endif //PCH_H

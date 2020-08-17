@@ -80,12 +80,6 @@
     <ClInclude Include="Components\Component.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Object\GameObject.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Object.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Components\PhysicsComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -100,6 +94,18 @@
     </ClInclude>
     <ClInclude Include="Core\Json.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Assert.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\GameObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Object.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Factory.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -130,9 +136,6 @@
     <ClCompile Include="Input\InputSystems.cpp">
       <Filter>Input</Filter>
     </ClCompile>
-    <ClCompile Include="Object\GameObject.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Components\PhysicsComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -144,6 +147,12 @@
     </ClCompile>
     <ClCompile Include="Core\Json.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Assert.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\GameObject.cpp">
+      <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

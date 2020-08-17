@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "PhysicsComponent.h"
-#include "Object/GameObject.h"
+#include "Objects/GameObject.h"
 
 namespace nc
 {
