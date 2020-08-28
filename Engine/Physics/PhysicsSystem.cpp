@@ -6,8 +6,12 @@ namespace nc
 
 	bool PhysicsSystem::StartUp()
 	{
-		b2Vec2 gravity{ 0,150 };
+		b2Vec2 gravity{ 0,10 };
 		m_world = new b2World(gravity);
+
+		m_contactListener = new ContactListener;
+		m_world->SetContactListener(m_contactListener);
+
 		return true;
 	}
 
@@ -21,44 +25,33 @@ namespace nc
 	{
 		float timeStep = (1.0f / 60.0f);
 
-		m_world->Step(timeStep,8.0f, 3.0f);
+		m_world->Step(timeStep, 8.0f, 3.0f);
 	}
 
-	b2Body* PhysicsSystem::CreateBody(const Vector2& position, const Vector2& size, float density, bool isDynamic)
+	
+	b2Body* PhysicsSystem::CreateBody(const Vector2& position, float angle, const RigidBodyData& data, GameObject* gameObject)
 	{
 		b2BodyDef bodyDef;
 
-		bodyDef.type = (isDynamic) ? b2_dynamicBody : b2_staticBody;
-		bodyDef.position.Set(position.x, position.y);
-
-		b2Body* body = m_world->CreateBody(&bodyDef);
-
-		b2PolygonShape shape;
-		shape.SetAsBox(size.x, size.y);
-
-		body->CreateFixture(&shape, density);
-
-		return body;
-
-	}
-
-	b2Body* PhysicsSystem::CreateBody(const Vector2& position, const RigidBodyData& data, GameObject* gameObject)
-	{
-		b2BodyDef bodyDef;
+		Vector2 world = PhysicsSystem::ScreenToWorld(position);
 
 		bodyDef.type = (data.isDynamic) ? b2_dynamicBody : b2_staticBody;
-		bodyDef.position.Set(position.x, position.y);
+
+		bodyDef.position.Set(world.x, world.y);
+		bodyDef.angle = nc::DegreesToRadians(angle);
 		bodyDef.fixedRotation = data.lockAngle;
 		b2Body* body = m_world->CreateBody(&bodyDef);
 
 		b2PolygonShape shape;
-		shape.SetAsBox(data.size.x, data.size.y);
+		Vector2 worldSize = PhysicsSystem::ScreenToWorld(data.size);
+		shape.SetAsBox(worldSize.x, worldSize.y);
 
 		b2FixtureDef fixtureDef;
-
 		fixtureDef.shape = &shape;
 		fixtureDef.density = data.density;
 		fixtureDef.friction = data.friction;
+		fixtureDef.restitution = data.restituion;
+		fixtureDef.isSensor = data.isSensor;
 		fixtureDef.userData = gameObject;
 
 		body->CreateFixture(&fixtureDef);
@@ -66,6 +59,11 @@ namespace nc
 		return body;
 	}
 
-	
+	void PhysicsSystem::DestroyBody(b2Body* body)
+	{
+		m_world->DestroyBody(body);
+	}
+
+
 
 }

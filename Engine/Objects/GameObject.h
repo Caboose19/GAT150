@@ -4,6 +4,7 @@
 #include "Object.h"
 #include <vector>
 #include <bitset>
+#include <list>
 namespace nc
 {
 	class Component;
@@ -40,6 +41,10 @@ namespace nc
 		void Update();
 		void Draw();
 
+		void BeginContact(GameObject* other);
+		void EndContact(GameObject* other);
+		std::vector<GameObject*> GetContactsWithTag(const std::string& tag);
+
 		template <typename T>
 		T* GetComponent()
 		{
@@ -67,6 +72,7 @@ namespace nc
 
 	protected:
 		std::vector<Component*> m_components;
+		std::list<GameObject*> m_contacts;
 	};
 }
 

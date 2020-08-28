@@ -58,6 +58,7 @@ namespace nc
 						gameObject->Create(m_engine);
 						gameObject->Read(objectValue);
 						AddGameObject(gameObject);
+						std::cout << gameObject->m_name << std::endl;
 					}
 			}
 		}
@@ -80,6 +81,7 @@ namespace nc
 					gameObject->Create(m_engine);
 					gameObject->Read(objectValue);
 					
+					std::cout << gameObject->m_name << std::endl;
 
 					ObjectFactory::Instance().Register(gameObject->m_name, new Prototype<Object>(gameObject));
 				}
