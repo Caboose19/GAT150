@@ -11,6 +11,8 @@ namespace nc
 		// Inherited via Render
 		virtual bool Create(void* data = nullptr) override;
 
+		virtual Object* Clone() override { return new SpriteComponent{ *this }; }
+
 		virtual void Destory() override;
 
 		virtual void Update() override;
@@ -22,6 +24,7 @@ namespace nc
 	protected:
 		class Texture* m_texture;
 		std::string m_textureName;
-		SDL_Rect m_rect;
+		Vector2 m_origin{0,0};
+		SDL_Rect m_rect{0,0,0,0};
 	};
 }

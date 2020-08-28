@@ -45,14 +45,14 @@ namespace nc
 		friend std::istream& operator >> (std::istream& stream, Color& c);
 
 		
+		SDL_Color  Pack888() const;
+		operator SDL_Color() const { return Pack888(); }
+
 
 		static const Color white;
 		static const Color red;
 		static const Color green;
 		static const Color blue;
-
-		SDL_Color  Pack888() const;
-		operator SDL_Color() const { return Pack888(); }
 	};
 		
 	

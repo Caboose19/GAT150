@@ -22,6 +22,7 @@ namespace nc
 	};
 
 	template<typename T>
+
 	inline T* ResourceManager::Get(const std::string& name, void* data)
 	{
 		T* resource = dynamic_cast<T*>(m_resources[name]);

@@ -4,26 +4,50 @@
 
 namespace nc
 {
-	template<typename Tbase,typename TKey>
-	class Factory
+	template <typename TBase>
+	class CreatorBase
 	{
 	public:
-
-		using function_t = std::function<Tbase*()>;
-
-	public:
-		template<typename T>
-		T* Create(TKey key);
-		void Register(TKey key, function_t function );
-
-	protected:
-		std::map<TKey, function_t >m_registry;
+		virtual TBase* Create() const = 0;
 	};
 
+	template <typename T, typename TBase>
+	class Creator: public CreatorBase<TBase>
+	{
+	public:
+		TBase* Create() const override { return new T; }
+	};
+
+	template<typename TBase,typename TKey>
+	class Factory
+	{
+
+	public:
+		template<typename T = TBase>
+		T* Create(TKey key);
+		void Register(TKey key,  CreatorBase<TBase>* creator );
+
+
 	
-	template<typename Tbase, typename TKey>
+	protected:
+		std::map<TKey, CreatorBase<TBase>* >m_registry;
+	};
+
+	template<typename TBase>
+	class Prototype : public CreatorBase<TBase>
+	{
+	public:
+		Prototype(TBase* instance) : m_instance{ instance } {}
+		TBase* Create() const override { return m_instance->Clone(); }
+	private:
+		TBase* m_instance{ nullptr };
+	};
+	
+
+
+	template<typename TBase, typename TKey>
 	template<typename T>
-	inline T* Factory<Tbase, TKey>::Create(TKey key)
+	inline T* Factory<TBase, TKey>::Create(TKey key)
 	{
 		
 		T* object{ nullptr };
@@ -31,16 +55,17 @@ namespace nc
 		auto iter = m_registry.find(key);
 		if (iter != m_registry.end())
 		{
-			object = dynamic_cast<T*>(iter->second());
+			CreatorBase<TBase>* creator = iter->second;
+			object = dynamic_cast<T*>(creator->Create());
 		}
 
 		return object;
 	}
 
-	template<typename Tbase, typename TKey>
-	inline void Factory<Tbase, TKey>::Register(TKey key, function_t function)
+	template<typename TBase, typename TKey>
+	inline void Factory<TBase, TKey>::Register(TKey key, CreatorBase<TBase>* creator)
 	{
-		m_registry[key] = function;
+		m_registry[key] = creator;
 	}
 
 }

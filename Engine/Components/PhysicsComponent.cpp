@@ -6,6 +6,7 @@ namespace nc
 {
 	bool PhysicsComponent::Create(void* data)
 	{
+		m_owner = static_cast<GameObject*>(data);
 		m_drag = 0.95f;
 		return true;
 	}

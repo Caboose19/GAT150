@@ -1,5 +1,6 @@
 #pragma once
 #include "Resources/ResourceManager.h"
+#include "Physics/PhysicsSystem.h"
 #include "Input/InputSystems.h"
 #include "Graphics/Renderer.h"
 #include "Core/Timer.h"

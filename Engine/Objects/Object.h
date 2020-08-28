@@ -8,6 +8,8 @@ namespace nc
 	public:
 		virtual bool Create(void* data = nullptr) = 0;
 		virtual void Destory() = 0;
+		virtual Object* Clone() { return nullptr; }
+
 
 		virtual void Read(const rapidjson::Value& value) {};
 
