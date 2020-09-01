@@ -19,7 +19,7 @@ void nc::Renderer::Update()
 
 bool nc::Renderer::Create(const std::string& name, int width, int height)
 {
-	 m_window = SDL_CreateWindow(name.c_str(), 100, 100, width, height, SDL_WINDOW_SHOWN);
+	 m_window = SDL_CreateWindow(name.c_str(), 100, 100, 1000, 600, SDL_WINDOW_SHOWN);
 
 	if (m_window == nullptr) {
 		std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;

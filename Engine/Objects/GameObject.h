@@ -8,6 +8,7 @@
 namespace nc
 {
 	class Component;
+	class Scene;
 
 	class GameObject : public Object
 	{
@@ -68,6 +69,7 @@ namespace nc
 		std::bitset<32> m_flags;
 				
 		Engine* m_engine{nullptr};
+		Scene* m_scene{ nullptr };
 		std::string m_name;
 
 	protected:

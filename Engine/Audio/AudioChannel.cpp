@@ -7,7 +7,7 @@ bool nc::AudioChannel::IsPlaying()
 	if (m_channel != nullptr)
 	{
 		m_channel->isPlaying(&isPlaying);
-	}
+	}                                                       
 	return isPlaying;
 }
 

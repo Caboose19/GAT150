@@ -16,6 +16,9 @@
     <Filter Include="Components">
       <UniqueIdentifier>{d1723571-f24b-4c4e-8acf-d9625870c36e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Build">
+      <UniqueIdentifier>{6a5ffc35-dca4-4cd4-8e92-dcb51e233e24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -27,13 +30,27 @@
     <ClCompile Include="Tilemap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Engine\Components\Enemy.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\PlayerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Tilemap.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\Engine\Components\Enemy.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Build\Scene.txt">
+      <Filter>Build</Filter>
+    </Text>
+    <Text Include="..\Build\tileMap.txt">
+      <Filter>Build</Filter>
+    </Text>
   </ItemGroup>
 </Project>

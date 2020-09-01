@@ -21,10 +21,13 @@ namespace nc
 
 		void Read(const rapidjson::Value& value);
 
+		void Flip(bool flip = true) { m_flip = flip; }
+
 	protected:
 		class Texture* m_texture;
 		std::string m_textureName;
 		Vector2 m_origin{0,0};
 		SDL_Rect m_rect{0,0,0,0};
+		bool m_flip{ false };
 	};
 }

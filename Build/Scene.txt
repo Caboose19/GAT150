@@ -2,6 +2,86 @@
   "Prototypes": [
     {
       "type": "GameObject",
+      "name": "ProtoBox",
+      "tag" : "Floor",
+      "transient": false,
+      "position": [
+        200,
+        400
+      ],
+      "scale": 1,
+      "angle": 0,
+      "Components": [
+        {
+          "type": "SpriteComponent",
+          "texture": "Textures/crate.png",
+          "origin": [
+            0.5,
+            0.5
+          ],
+          "rect": [
+            0,
+            0,
+            64,
+            64
+          ]
+        },
+        {
+          "type": "RigidBodyComponent",
+          "isDynamic": false,
+          "lockAngle": true,
+          "size": [
+            32,
+            32
+          ],
+          "density": 1,
+          "friction": 1,
+          "restitution": 0
+        }
+      ]
+    },
+    {
+      "type": "GameObject",
+      "name": "Tile01",
+      "tag" : "Floor",
+      "transient": false,
+      "position": [
+        200,
+        400
+      ],
+      "scale": 1,
+      "angle": 0,
+      "Components": [
+        {
+          "type": "SpriteComponent",
+          "texture": "Textures/tile01.png",
+          "origin": [
+            0.5,
+            0.5
+          ],
+          "rect": [
+            0,
+            0,
+            64,
+            64
+          ]
+        },
+        {
+          "type": "RigidBodyComponent",
+          "isDynamic": false,
+          "lockAngle": false,
+          "size": [
+            32,
+            32
+          ],
+          "density": 1,
+          "friction": 1,
+          "restitution": 0.2
+        }
+      ]
+    },
+    {
+      "type": "GameObject",
       "name": "ProtoExplosion",
       "lifetime": 3,
       "transient": true,
@@ -14,7 +94,7 @@
       "Components": [
         {
           "type": "SpriteAnimationComponent",
-          "texture": "explosion.png",
+          "texture": "Textures/explosion.png",
           "numX": 5,
           "numY": 5,
           "numFrames": 25,
@@ -36,7 +116,7 @@
       "Components": [
         {
           "type": "SpriteAnimationComponent",
-          "texture": "coin.png",
+          "texture": "Textures/coin.png",
           "origin": [
             0.5,
             0.5
@@ -57,73 +137,49 @@
           ],
           "density": 1,
           "friction": 1,
-          "restitution": 0
+          "restitution": 0.7
         }
       ]
     },
     {
       "type": "GameObject",
-      "name": "EnemyProto",
+      "name": "ProtoBat",
+      "tag": "Enemy",
+      "transient": false,
       "position": [
-        40,
-        30
+        0,
+        0
       ],
       "scale": 1,
       "angle": 0,
       "Components": [
         {
-          "type": "SpriteComponent",
-          "z": 1,
-          "texture": "cars.png",
+          "type": "SpriteAnimationComponent",
+          "texture": "Textures/bat.png",
           "origin": [
             0.5,
             0.5
           ],
-          "rect": [
-            64,
-            110,
-            60,
-            112
-          ]
-        }
-      ]
-    },
-    {
-      "type": "GameObject",
-      "name": "Ground",
-      "tag": "Floor",
-      "position": [
-        400,
-        500
-      ],
-      "scale": 1,
-      "angle": 0,
-      "Components": [
+          "numX": 4,
+          "numY": 1,
+          "numFrames": 4,
+          "fps": 10
+        },
         {
-          "type": "SpriteComponent",
-          "texture": "ground.png",
-          "origin": [
-            0.5,
-            0.5
-          ],
-          "rect": [
-            0,
-            0,
-            800,
-            32
-          ]
+          "type": "EnemyComponent"
         },
         {
           "type": "RigidBodyComponent",
-          "isDynamic": false,
+          "isDynamic": true,
           "lockAngle": true,
           "size": [
-            400,
+            32,
             32
           ],
           "density": 1,
           "friction": 1,
-          "restitution": 0
+          "restitution": 0.7,
+          "gravityScale": 0
         }
       ]
     }
@@ -134,14 +190,14 @@
       "name": "Background",
       "position": [
         0,
-        -75
+        0
       ],
       "scale": 1,
       "angle": 0,
       "Components": [
         {
           "type": "SpriteComponent",
-          "texture": "forest.png",
+          "texture": "Textures/background.png",
           "origin": [
             0,
             0
@@ -152,6 +208,12 @@
             800,
             600
           ]
+           },
+        {
+          "type": "AudioComponent",
+          "sound": "Halo.wav",
+          "playOnAwake": true,
+          "loop": true
         }
       ]
     },
@@ -171,34 +233,34 @@
           "lockAngle": true,
           "size": [
             16,
-            32
+            16
           ],
           "density": 1,
           "friction": 1,
-          "restitution": 0
+          "restitution": 0.2,
+          "gravityScale": 4
         },
         {
           "type": "PlayerComponent"
         },
         {
           "type": "SpriteAnimationComponent",
-          "texture": "player.png",
-          "numX": 8,
-          "numY": 1,
-          "numFrames": 8,
-          "fps": 15,
+          "texture": "Textures/Player.png",
+           "numX": 2,
+          "numY":  1,
+          "numFrames": 2,
+          "fps": 3,
           "origin": [
-            0.5,
-            0.5
-          ]
-        },
-				{
-					"type":"AudioComponent",
-					"sound":"jump.wav",
-					"playOnAwake": true,
-					"loop": false
-				}
-
+            0.7,
+            0.7
+            ]
+         },
+        {
+          "type": "AudioComponent",
+          "sound": "jump.wav",
+          "playOnAwake": false,
+          "loop": false
+        }
       ]
     }
   ]

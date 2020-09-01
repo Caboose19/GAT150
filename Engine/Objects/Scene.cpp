@@ -55,7 +55,7 @@ namespace nc
 				GameObject* gameObject = ObjectFactory::Instance().Create<GameObject>(typeName);
 					if (gameObject)
 					{
-						gameObject->Create(m_engine);
+						gameObject->Create(this);
 						gameObject->Read(objectValue);
 						AddGameObject(gameObject);
 						std::cout << gameObject->m_name << std::endl;
@@ -78,7 +78,7 @@ namespace nc
 				GameObject* gameObject = ObjectFactory::Instance().Create<GameObject>(typeName);
 				if (gameObject)
 				{
-					gameObject->Create(m_engine);
+					gameObject->Create(this);
 					gameObject->Read(objectValue);
 					
 					std::cout << gameObject->m_name << std::endl;

@@ -16,6 +16,7 @@ namespace nc
 			float density{ 0 };
 			float friction{ 1 };
 			float restituion{ 0.3f };
+			float gravityScale{ 1 };
 			bool lockAngle{ false };
 			bool isDynamic{ false };
 			bool isSensor{ false };
@@ -30,7 +31,7 @@ namespace nc
 		void DestroyBody(b2Body* body);
 
 		static Vector2 WorldToScreen(const Vector2& world) { return world * 32.0f; }
-		static Vector2 ScreenToWorld(const Vector2& screen) { return screen * (1.0f * 32.0f); }
+		static Vector2 ScreenToWorld(const Vector2& screen) { return screen * (1.0f / 32.0f); }
 
 	protected:
 		b2World* m_world{ nullptr };

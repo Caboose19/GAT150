@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include "Core/Json.h"
 #include "Math/Vector2.h"
 #include <vector>
